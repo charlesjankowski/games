@@ -416,8 +416,8 @@ public class Asteroids extends Applet implements Runnable, KeyListener {
              double angle = bullet[currentBullet].getMoveAngle();
              double svx = ship.getVelX();
              double svy = ship.getVelY();
-             bullet[currentBullet].setVelX(svx + calcAngleMoveX(angle) * 3);
-             bullet[currentBullet].setVelY(svy + calcAngleMoveY(angle) * 3);
+             bullet[currentBullet].setVelX(svx + calcAngleMoveX(angle) * 4);
+             bullet[currentBullet].setVelY(svy + calcAngleMoveY(angle) * 4);
              break;
         }
     }
