@@ -30,13 +30,13 @@ public class Asteroids extends Applet implements Runnable, KeyListener {
     boolean showBounds = false;
 
     //create the asteroid array
-    int ASTEROIDS = 20;
+    int ASTEROIDS = 500;
     Asteroid[] ast = new Asteroid[ASTEROIDS];
 
     //create the bullet array
-    int BULLETS = 10;
+    int BULLETS = 100;
     Bullet[] bullet = new Bullet[BULLETS];
-    int currentBullet = 0;
+    int currentBullet = 1;
     //the player's ship
     Ship ship = new Ship();
 
@@ -117,7 +117,7 @@ public class Asteroids extends Applet implements Runnable, KeyListener {
         g2d.setTransform(identity);
         g2d.translate(ship.getX(), ship.getY());
         g2d.rotate(Math.toRadians(ship.getFaceAngle()));
-        g2d.setColor(Color.ORANGE);
+        g2d.setColor(Color.CYAN);
         g2d.fill(ship.getShape());
     }
     
@@ -135,8 +135,9 @@ public class Asteroids extends Applet implements Runnable, KeyListener {
                 //draw the bullet
                 g2d.setTransform(identity);
                 g2d.translate(bullet[n].getX(), bullet[n].getY());
-                g2d.setColor(Color.MAGENTA);
-                g2d.draw(bullet[n].getShape());
+                g2d.rotate(Math.toRadians(ship.getFaceAngle()));
+                g2d.setColor(Color.GREEN);
+                g2d.fill(bullet[n].getShape());
             }
         }
     }
@@ -156,7 +157,7 @@ public class Asteroids extends Applet implements Runnable, KeyListener {
                 g2d.setTransform(identity);
                 g2d.translate(ast[n].getX(), ast[n].getY());
                 g2d.rotate(Math.toRadians(ast[n].getMoveAngle()));
-                g2d.setColor(Color.DARK_GRAY);
+                g2d.setColor(Color.RED);
                 g2d.fill(ast[n].getShape());
             }
         }
@@ -387,7 +388,7 @@ public class Asteroids extends Applet implements Runnable, KeyListener {
 
         case KeyEvent.VK_RIGHT:
              //right arrow rotates ship right 5 degrees
-             ship.incFaceAngle(5);
+             ship.incFaceAngle(10);
              if (ship.getFaceAngle() > 360) ship.setFaceAngle(5);
              break;
 
@@ -397,16 +398,29 @@ public class Asteroids extends Applet implements Runnable, KeyListener {
              ship.incVelX(calcAngleMoveX(ship.getMoveAngle()) * 0.1);
              ship.incVelY(calcAngleMoveY(ship.getMoveAngle()) * 0.1);
              break;
+      
+        case KeyEvent.VK_DOWN:
+            //up arrow adds thrust to ship (1/10 normal speed)
+            ship.setMoveAngle(ship.getFaceAngle() - 90);
+            ship.incVelX(calcAngleMoveX(ship.getMoveAngle()) * -0.1);
+            ship.incVelY(calcAngleMoveY(ship.getMoveAngle()) * -0.1);
+            break;
+            
+        case KeyEvent.VK_Q:
+        	ship.setX(320);
+            ship.setY(240);
+            ship.setFaceAngle(0);
+            ship.setVelX(0);
+            ship.setVelY(0);
+            
 
         //Ctrl, Enter, or Space can be used to fire weapon
-        case KeyEvent.VK_CONTROL:
-        case KeyEvent.VK_ENTER:
         case KeyEvent.VK_SPACE:
              //fire a bullet
              currentBullet++;
-             if (currentBullet > BULLETS - 1) currentBullet = 0;
+             if (currentBullet > BULLETS - 1) currentBullet = 1;
              bullet[currentBullet].setAlive(true);
-
+             
              //point bullet in same direction ship is facing
              bullet[currentBullet].setX(ship.getX());
              bullet[currentBullet].setY(ship.getY());
@@ -416,8 +430,8 @@ public class Asteroids extends Applet implements Runnable, KeyListener {
              double angle = bullet[currentBullet].getMoveAngle();
              double svx = ship.getVelX();
              double svy = ship.getVelY();
-             bullet[currentBullet].setVelX(svx + calcAngleMoveX(angle) * 4);
-             bullet[currentBullet].setVelY(svy + calcAngleMoveY(angle) * 4);
+             bullet[currentBullet].setVelX(svx + calcAngleMoveX(angle) * 20);
+             bullet[currentBullet].setVelY(svy + calcAngleMoveY(angle) * 20);
              break;
         }
     }

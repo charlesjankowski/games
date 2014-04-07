@@ -7,8 +7,8 @@ import java.awt.Rectangle;
  **********************************************************/
 public class Ship extends BaseVectorShape {
     //define the ship polygon
-    private int[] shipx = { -6, -3, 0, 3, 6, 0 };
-    private int[] shipy = { 6, 7, 7, 7, 6, -7 };
+    private int[] shipx = { -8, -20, -8, -4, 4, 8, 20, 8, 0 };
+    private int[] shipy = { 0, 16, 16, 24, 24, 16, 16, 0, -20 };
 
     //bounding rectangle
     public Rectangle getBounds() {

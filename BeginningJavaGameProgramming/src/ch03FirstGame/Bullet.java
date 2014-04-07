@@ -1,7 +1,6 @@
 package ch03FirstGame;
 
 import java.awt.*;
-import java.awt.Rectangle;
 
 /*********************************************************
  * Bullet class - polygonal shape of a bullet
@@ -9,6 +8,9 @@ import java.awt.Rectangle;
  **********************************************************/
 public class Bullet extends BaseVectorShape {
 
+	private int[] bulletx = { -4, -10, -4, -2, 2, 4, 10, 4, 0 };
+    private int[] bullety = { 0, 8, 8, 12, 12, 8, 8, 0, -10 };
+    
     //bounding rectangle
     public Rectangle getBounds() {
         Rectangle r;
@@ -18,7 +20,7 @@ public class Bullet extends BaseVectorShape {
 
     Bullet() {
         //create the bullet shape
-        setShape(new Rectangle(0, 0, 1, 1));
+        setShape(new Polygon(bulletx, bullety, bulletx.length));
         setAlive(false);
     }
 }
